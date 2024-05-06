@@ -34,8 +34,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //redirect to login page after signing up
-                // maybe show toast message as well
-//                Intent intent = new Intent(SignUpActivity.this, )
+                // maybe show toast message as well display error as well after consuming APIs
+                Intent intent = new Intent(SignUpActivity.this, HomePageActivity.class);
             }
         });
     }
