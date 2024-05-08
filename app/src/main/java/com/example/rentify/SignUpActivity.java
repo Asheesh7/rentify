@@ -12,6 +12,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     TextView login;
     Button signup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //redirect to login page after signing up
                 // maybe show toast message as well display error as well after consuming APIs
-                Intent intent = new Intent(SignUpActivity.this, HomePageActivity.class);
+//                Intent intent = new Intent(SignUpActivity.this, HomePageActivity.class);
             }
         });
     }
