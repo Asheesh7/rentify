@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/profile"
+        android:checkable="true"
+        android:icon="@drawable/person"
+        android:title="Profile" />
+    <item
+        android:id="@+id/nearest_you"
+        android:checkable="true"
+        android:icon="@drawable/icon_location"
+        android:title="Nearest You" />
+    <!--    <item tools:ignore="MenuTitle">-->
+    <!--        <menu>-->
+    <item
+        android:id="@+id/find_a_partner"
+        android:checkable="true"
+        android:icon="@drawable/icon_user_add"
+        android:title="Find a Partner" />
+    <item
+        android:id="@+id/notification"
+        android:checkable="true"
+        android:icon="@drawable/icon_notification"
+        android:title="Notifications" />
+    <item
+        android:id="@+id/community"
+        android:checkable="true"
+        android:icon="@drawable/icon_community"
+        android:title="Community" />
+    <!--        </menu>-->
+    <!--    </item>-->
+
+    <!--    <item tools:ignore="MenuTitle">-->
+    <!--        <menu>-->
+    <item
+        android:id="@+id/payment"
+        android:checkable="true"
+        android:icon="@drawable/icon_payment"
+        android:title="Payment" />
+    <!--        </menu>-->
+    <!--    </item>-->
+
+
+</menu>
