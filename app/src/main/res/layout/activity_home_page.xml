@@ -80,6 +80,9 @@
             android:layout_height="match_parent"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-99dp">
+
+            <include layout="@layout/content_home_page"/>
+
             <!--            android:layout_above="@id/bottom_navigation"-->
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_navigation"

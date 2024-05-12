@@ -1,5 +1,6 @@
 package com.example.rentify;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -8,26 +9,72 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomePageActivity extends AppCompatActivity {
+    ListView myHompageListView;
+    List<Room> roomList;
+    Room room;
+
+    DatabaseReference roomdatabase;
 
     private DrawerLayout drawer;
     private NavigationView navView;
     public static final boolean IS_HOME_ACTIVITY = true;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
+//        setContentView(R.layout.content_home_page);
 
+//        myHompageListView = findViewById(R.id.myHompageListView);
+//
+//        roomList = new ArrayList<>();
+//
+//        roomdatabase = FirebaseDatabase.getInstance().getReference("ROOM");
+//
+//
+//
+//        roomdatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                roomList.clear();
+//                for (DataSnapshot roomDataSnap : snapshot.getChildren()) {
+//                    Room room = roomDataSnap.getValue(Room.class);
+//                    if (room != null) {
+//                        roomList.add(room);
+//                    } else {
+//                        Toast.makeText(HomePageActivity.this, "to parse student data", Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                }
+//
+//                HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this,roomList);
+//                myHompageListView.setAdapter(homePageAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
         // handling drawer toggle functionality
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

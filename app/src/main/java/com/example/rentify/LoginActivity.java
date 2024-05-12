@@ -1,57 +1,98 @@
 package com.example.rentify;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class LoginActivity extends AppCompatActivity {
-    EditText username, pswrd;
-    Button signInBtn;
+
+    EditText emailSignIn , passwordSignIn;
+    Button signInButton;
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        username = findViewById(R.id.emailAddress);
-        pswrd = findViewById(R.id.Password);
-        signInBtn = findViewById(R.id.loginBtn);
-        TextView forgotPswrd = findViewById(R.id.forgotPassword);
-        TextView signUp = findViewById(R.id.signUp);
+        emailSignIn = findViewById(R.id.emailAddress);
+        passwordSignIn = findViewById(R.id.Password);
+        signInButton = findViewById(R.id.loginBtn);
+        progressDialog = new ProgressDialog(this);
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
-//        Sign in functionality to be added
-        signInBtn.setOnClickListener(new View.OnClickListener() {
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
+
+        signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginActivity.this, "Logged In", Toast.LENGTH_SHORT).show();
-            }
-        });
+                String emailId , password , confirmPasswordSignUp;
+                emailId = emailSignIn.getText().toString();
+                password = passwordSignIn.getText().toString();
 
-        //    Forgot password section
-        forgotPswrd.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Intent to start the ForgotPasswordActivity
-                Intent intent = new Intent(LoginActivity.this, ForgotPassword.class);
-                startActivity(intent);
-            }
-        });
 
-//        signup section
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                intent to start the signUpActivity
-                Intent intent = new Intent(LoginActivity.this, HomePageActivity.class);
-                startActivity(intent);
+                if(emailId.isEmpty())
+                {
+                    emailSignIn.setError("Enter email");
+                }
+                if(password.isEmpty())
+                {
+                    passwordSignIn.setError("Enter password");
+                }
+                else
+                {
+                    mAuth.signInWithEmailAndPassword(emailId , password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful())
+                            {
+                                sendUserNextActivity();
+                                Toast.makeText(LoginActivity.this, "Sign Up is successful", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(LoginActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+
+
             }
+
         });
     }
 
+    public void signInClicked(View view) {
+        // Start the Sign Up activity
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
 
+    public void sendUserNextActivity() {
+        // Start the Sign Up activity
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+    }
 }
