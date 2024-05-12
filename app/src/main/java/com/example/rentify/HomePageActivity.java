@@ -44,37 +44,37 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 //        setContentView(R.layout.content_home_page);
 
-//        myHompageListView = findViewById(R.id.myHompageListView);
-//
-//        roomList = new ArrayList<>();
-//
-//        roomdatabase = FirebaseDatabase.getInstance().getReference("ROOM");
-//
-//
-//
-//        roomdatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                roomList.clear();
-//                for (DataSnapshot roomDataSnap : snapshot.getChildren()) {
-//                    Room room = roomDataSnap.getValue(Room.class);
-//                    if (room != null) {
-//                        roomList.add(room);
-//                    } else {
-//                        Toast.makeText(HomePageActivity.this, "to parse student data", Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                }
-//
-//                HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this,roomList);
-//                myHompageListView.setAdapter(homePageAdapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+        myHompageListView = findViewById(R.id.myHompageListView);
+
+        roomList = new ArrayList<>();
+
+        roomdatabase = FirebaseDatabase.getInstance().getReference("ROOM");
+
+
+
+        roomdatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                roomList.clear();
+                for (DataSnapshot roomDataSnap : snapshot.getChildren()) {
+                    Room room = roomDataSnap.getValue(Room.class);
+                    if (room != null) {
+                        roomList.add(room);
+                    } else {
+                        Toast.makeText(HomePageActivity.this, "to parse student data", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+
+                HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this,roomList);
+                myHompageListView.setAdapter(homePageAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         // handling drawer toggle functionality
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

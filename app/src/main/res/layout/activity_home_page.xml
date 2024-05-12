@@ -81,7 +81,14 @@
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="-99dp">
 
+<!--            <include layout="@layout/content_home_page"/>-->
+
             <include layout="@layout/content_home_page"/>
+<!--            <ListView-->
+<!--                android:id="@+id/myHompageListView"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:padding="5dp" />-->
 
             <!--            android:layout_above="@id/bottom_navigation"-->
             <com.google.android.material.bottomnavigation.BottomNavigationView
