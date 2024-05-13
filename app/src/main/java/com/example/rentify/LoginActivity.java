@@ -69,7 +69,8 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
-                                sendUserNextActivity();
+                                FirebaseUser user = mAuth.getCurrentUser();
+                                sendUserNextActivity(String.valueOf(user));
                                 Toast.makeText(LoginActivity.this, "Sign Up is successful", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(LoginActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
@@ -90,9 +91,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void sendUserNextActivity() {
+    public void sendUserNextActivity(String user) {
         // Start the Sign Up activity
         Intent intent = new Intent(this, HomePageActivity.class);
+        intent.putExtra("USERNAME", user);
         startActivity(intent);
     }
 }

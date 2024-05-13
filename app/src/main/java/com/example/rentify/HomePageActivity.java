@@ -3,6 +3,7 @@ package com.example.rentify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -22,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,24 +36,49 @@ public class HomePageActivity extends AppCompatActivity {
 
     DatabaseReference roomdatabase;
 
+    DatabaseReference userdatabase;
+
     private DrawerLayout drawer;
     private NavigationView navView;
     public static final boolean IS_HOME_ACTIVITY = true;
+
+
+
+
+
+
+
+
+
+    HomePageAdapter homePageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-//        setContentView(R.layout.content_home_page);
+
+        String username = getIntent().getStringExtra("USERNAME");
+
+        // Display username
+        TextView textViewUsername = findViewById(R.id.username);
+        textViewUsername.setText(username);
+
 
         myHompageListView = findViewById(R.id.myHompageListView);
+        SearchView searchView = findViewById(R.id.searchView);
 
         roomList = new ArrayList<>();
 
+
         roomdatabase = FirebaseDatabase.getInstance().getReference("ROOM");
 
+//        userdatabase = FirebaseDatabase.getInstance().getReference("USER");
+//        Query query = userdatabase.orderByChild("email").equalTo(username);
 
 
+
+
+        // Add ValueEventListener to fetch data from Firebase
         roomdatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -61,20 +88,82 @@ public class HomePageActivity extends AppCompatActivity {
                     if (room != null) {
                         roomList.add(room);
                     } else {
-                        Toast.makeText(HomePageActivity.this, "to parse student data", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomePageActivity.this, "Failed to parse room data", Toast.LENGTH_SHORT).show();
                     }
-
                 }
-
-                HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this,roomList);
+                // Update the ListView adapter with the filtered data
+                HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this, roomList);
                 myHompageListView.setAdapter(homePageAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(HomePageActivity.this, "Failed to fetch data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+//        query.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    String userId = snapshot.getKey();
+//                    // Now that you have the userId, you can retrieve rooms associated with it
+//                    getRooms(userId);
+//                }
+//            }
+//
+//            private void getRooms(String userId) {
+//                DatabaseReference roomsRef = FirebaseDatabase.getInstance().getReference("ROOM");
+//                Query query = roomsRef.orderByChild("UserID").equalTo(userId);
+//                query.addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        roomList.clear();
+//                        for (DataSnapshot roomDataSnap : snapshot.getChildren()) {
+//                            Room room = roomDataSnap.getValue(Room.class);
+//                            if (room != null) {
+//                                roomList.add(room);
+//                            } else {
+//                                Toast.makeText(HomePageActivity.this, "Failed to parse room data", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                        // Update the ListView adapter with the filtered data
+//                        HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this, roomList);
+//                        myHompageListView.setAdapter(homePageAdapter);}
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                        // Handle errors
+//                    }
+//                });
+//            }
+//
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors
+//            }
+//        });
+//
+//
+//
+//        // Set up search functionality
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                // Filter the data in the adapter based on the search query
+//                if (homePageAdapter != null) {
+//                    homePageAdapter.getFilter().filter(newText);
+//                }
+//                return true;
+//            }
+//        });
+
         // handling drawer toggle functionality
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,8 +176,10 @@ public class HomePageActivity extends AppCompatActivity {
         toggle.syncState();
 
 //        handling extra text
-        TextView extraText = findViewById(R.id.username);
-        extraText.setText("Jane");
+//        TextView extraText = findViewById(R.id.username);
+//        extraText.setText("Jane");
+//        TextView textViewUsername = findViewById(R.id.username);
+//        textViewUsername.setText(username);
 
          navView = findViewById(R.id.nav_view);
         navView.setNavigationItemSelectedListener(menuItem -> {
