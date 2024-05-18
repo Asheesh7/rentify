@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -37,10 +35,12 @@ public class HomePageActivity extends AppCompatActivity {
     DatabaseReference roomdatabase;
 
     DatabaseReference userdatabase;
+    DatabaseReference wishListdatabase;
 
     private DrawerLayout drawer;
     private NavigationView navView;
     public static final boolean IS_HOME_ACTIVITY = true;
+
 
 
 
@@ -68,6 +68,7 @@ public class HomePageActivity extends AppCompatActivity {
         SearchView searchView = findViewById(R.id.searchView);
 
         roomList = new ArrayList<>();
+
 
 
         roomdatabase = FirebaseDatabase.getInstance().getReference("ROOM");
@@ -102,67 +103,12 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-//        query.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    String userId = snapshot.getKey();
-//                    // Now that you have the userId, you can retrieve rooms associated with it
-//                    getRooms(userId);
-//                }
-//            }
-//
-//            private void getRooms(String userId) {
-//                DatabaseReference roomsRef = FirebaseDatabase.getInstance().getReference("ROOM");
-//                Query query = roomsRef.orderByChild("UserID").equalTo(userId);
-//                query.addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        roomList.clear();
-//                        for (DataSnapshot roomDataSnap : snapshot.getChildren()) {
-//                            Room room = roomDataSnap.getValue(Room.class);
-//                            if (room != null) {
-//                                roomList.add(room);
-//                            } else {
-//                                Toast.makeText(HomePageActivity.this, "Failed to parse room data", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                        // Update the ListView adapter with the filtered data
-//                        HomePageAdapter homePageAdapter = new HomePageAdapter(HomePageActivity.this, roomList);
-//                        myHompageListView.setAdapter(homePageAdapter);}
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        // Handle errors
-//                    }
-//                });
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors
-//            }
-//        });
-//
-//
-//
-//        // Set up search functionality
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                // Filter the data in the adapter based on the search query
-//                if (homePageAdapter != null) {
-//                    homePageAdapter.getFilter().filter(newText);
-//                }
-//                return true;
-//            }
-//        });
+
+
+
+
+
+
 
         // handling drawer toggle functionality
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -189,6 +135,8 @@ public class HomePageActivity extends AppCompatActivity {
             return true;
         });
 
+
+
         //handling bottom navigation menu
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
@@ -208,6 +156,30 @@ public class HomePageActivity extends AppCompatActivity {
             }
             return false;
         });
+
+//        wishListdatabase = FirebaseDatabase.getInstance().getReference("WISHLIST");
+//        btnAddToWishlist.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                inserDataToWishlist();
+//            }
+//        });
+    }
+
+
+    private void inserDataToWishlist() {
+
+        roomdatabase.child("1").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String roomName = snapshot.child("name").getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void showHome() {
@@ -225,7 +197,7 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void showWishList() {
-        Intent intent = new Intent(HomePageActivity.this, WIshlistActivity.class);
+        Intent intent = new Intent(HomePageActivity.this, WishlistActivity.class);
         startActivity(intent);
     }
 
@@ -238,3 +210,4 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
 }
+
