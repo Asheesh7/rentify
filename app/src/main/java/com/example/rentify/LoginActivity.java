@@ -12,6 +12,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.rentify.SignUpActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -69,8 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful())
                             {
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                sendUserNextActivity(String.valueOf(user));
+//                                FirebaseUser user = mAuth.getCurrentUser();
+                                sendUserNextActivity();
                                 Toast.makeText(LoginActivity.this, "Sign Up is successful", Toast.LENGTH_SHORT).show();
                             }else{
                                 Toast.makeText(LoginActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
@@ -90,11 +91,16 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         startActivity(intent);
     }
-
-    public void sendUserNextActivity(String user) {
+    public void forgotPasswordClicked(View view) {
         // Start the Sign Up activity
-        Intent intent = new Intent(this, HomePageActivity.class);
-        intent.putExtra("USERNAME", user);
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    public void sendUserNextActivity() {
+        // Start the Sign Up activity
+        Intent intent = new Intent(LoginActivity.this, NewHomePageActivity.class);
+//        intent.putExtra("USERNAME", user);
         startActivity(intent);
     }
 }

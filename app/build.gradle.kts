@@ -52,7 +52,12 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.navigation:navigation-fragment:2.7.7")
     implementation("androidx.navigation:navigation-ui:2.7.7")
+    implementation ("com.firebaseui:firebase-ui-database:8.0.2")
+    implementation ("com.google.firebase:firebase-database:21.0.0") // Firebase Realtime Database
+    implementation ("com.firebaseui:firebase-ui-database:8.0.2") // Firebase UI for Database
+    implementation ("androidx.recyclerview:recyclerview:1.3.2")
     implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation ("com.orhanobut:dialogplus:1.11@aar")
     implementation("androidx.activity:activity:1.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

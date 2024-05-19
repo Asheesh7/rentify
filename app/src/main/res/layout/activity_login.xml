@@ -116,6 +116,7 @@
                     android:ems="10"
                     android:inputType="text"
                     android:text="Forgot Password"
+                    android:onClick="forgotPasswordClicked"
                     android:textColor="#3538CD"
                     android:textSize="16dp"
                     android:clickable="true"
@@ -165,6 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:text="Sign Up"
+                    android:onClick="signInClicked"
                     android:textColor="#3538CD" />
             </LinearLayout>
         </LinearLayout>
